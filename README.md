@@ -152,7 +152,3 @@ Tidak. Anda bisa tetap menggunakan **Never**. Skrip hanya mengubah preferensi br
 **Apakah harus menggunakan sudo?**
 
 Tidak. Jalankan perintah sebagai pengguna biasa. Untuk Safari, gunakan izin Full Disk Access seperti langkah di atas.
-
-**Mengapa nama skrip masih chrome-menubar.sh?**
-
-Skrip awalnya dibuat untuk Chrome, lalu ditambahkan dukungan Safari dan Brave. Jika nama browser tidak ditulis, skrip menggunakan Chrome secara default.
