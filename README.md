@@ -4,7 +4,7 @@ Sembunyikan menu bar saat menonton YouTube fullscreen, tanpa perlu bolak-balik m
 
 ## Mengapa saya membuat ini?
 
-Saya suka membiarkan menu bar tetap terlihat saat bekerja, membuka VS Code, dan menggunakan aplikasi lain. Karena itu, saya memilih **Never** pada pengaturan **Automatically hide and show the menu bar** di macOS.
+Saya suka membiarkan menu bar tetap terlihat saat bekerja, membuka VS Code, dan menggunakan aplikasi lain ketika mode fullscreen. Karena itu, saya memilih **Never** pada pengaturan **Automatically hide and show the menu bar** di macOS.
 
 Namun, pengaturan tersebut juga membuat menu bar tetap terlihat saat saya menonton YouTube dalam mode fullscreen. Saya ingin video tampil lebih leluasa tanpa harus membuka System Settings setiap kali ingin menonton, lalu mengubahnya lagi setelah selesai.
 
