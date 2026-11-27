@@ -3,30 +3,31 @@ set -eu
 
 # Keep Chrome as the default for compatibility with existing commands.
 case "${2:-chrome}" in
-  chrome) browser_name=Chrome; browser_domain=com.google.Chrome ;;
-  safari) browser_name=Safari; browser_domain=com.apple.Safari ;;
-  brave) browser_name=Brave; browser_domain=com.brave.Browser ;;
-  *) print -u2 'Browser must be chrome, safari, or brave'; exit 2 ;;
+  chrome) app_name=Chrome; app_domain=com.google.Chrome ;;
+  safari) app_name=Safari; app_domain=com.apple.Safari ;;
+  brave) app_name=Brave; app_domain=com.brave.Browser ;;
+  pcsx2) app_name=PCSX2; app_domain=net.pcsx2.pcsx2 ;;
+  *) print -u2 'App must be chrome, safari, brave, or pcsx2'; exit 2 ;;
 esac
 case "${1:-status}" in
   status)
-    /usr/bin/defaults read "$browser_domain" AppleMenuBarVisibleInFullscreen 2>/dev/null || {
-      print "$browser_name has no override; it follows the system setting."
+    /usr/bin/defaults read "$app_domain" AppleMenuBarVisibleInFullscreen 2>/dev/null || {
+      print "$app_name has no override; it follows the system setting."
     }
     ;;
   enable)
-    /usr/bin/defaults write "$browser_domain" AppleMenuBarVisibleInFullscreen -bool false
-    print "Override enabled. Quit $browser_name with Cmd+Q and reopen it to test."
+    /usr/bin/defaults write "$app_domain" AppleMenuBarVisibleInFullscreen -bool false
+    print "Override enabled. Quit $app_name with Cmd+Q and reopen it to test."
     ;;
   restore)
-    # Before enabling, these browser keys were absent on this Mac.
-    if /usr/bin/defaults read "$browser_domain" AppleMenuBarVisibleInFullscreen >/dev/null 2>&1; then
-      /usr/bin/defaults delete "$browser_domain" AppleMenuBarVisibleInFullscreen
+    # Remove the override so the app follows the system setting.
+    if /usr/bin/defaults read "$app_domain" AppleMenuBarVisibleInFullscreen >/dev/null 2>&1; then
+      /usr/bin/defaults delete "$app_domain" AppleMenuBarVisibleInFullscreen
     fi
-    print "$browser_name now follows the system setting. Quit and reopen $browser_name."
+    print "$app_name now follows the system setting. Quit and reopen $app_name."
     ;;
   *)
-    print -u2 'Usage: zsh chrome-menubar.sh [status|enable|restore] [chrome|safari|brave]'
+    print -u2 'Usage: zsh menubar.sh [status|enable|restore] [chrome|safari|brave|pcsx2]'
     exit 2
     ;;
 esac

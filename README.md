@@ -1,6 +1,6 @@
 # Smart Menu Bar
 
-Sembunyikan menu bar saat menonton YouTube fullscreen, tanpa perlu bolak-balik mengubah pengaturan menu bar di macOS.
+Sembunyikan menu bar saat menonton YouTube atau bermain PCSX2 dalam mode fullscreen, tanpa perlu bolak-balik mengubah pengaturan menu bar di macOS.
 
 ## Mengapa saya membuat ini?
 
@@ -14,7 +14,7 @@ Smart Menu Bar dibuat untuk mengatasi kebutuhan tersebut: cukup atur browser sek
 
 ## Cara kerjanya
 
-Smart Menu Bar adalah skrip sederhana yang mengubah preferensi menu bar untuk masing-masing browser:
+Smart Menu Bar adalah skrip sederhana yang mengubah preferensi menu bar untuk masing-masing aplikasi yang didukung:
 
 ```text
 AppleMenuBarVisibleInFullscreen = false
@@ -24,15 +24,16 @@ Pengaturan global macOS tidak diubah. Anda tetap bisa menggunakan pilihan **Neve
 
 Tidak perlu memasang extension, menjalankan aplikasi tambahan, atau membiarkan Terminal terbuka. Pengaturannya tersimpan setelah sleep, restart, dan shutdown.
 
-## Browser yang didukung
+## Aplikasi yang didukung
 
-| Browser | Nama dalam perintah |
+| Aplikasi | Nama dalam perintah |
 | --- | --- |
 | Google Chrome | `chrome` |
 | Safari | `safari` |
 | Brave | `brave` |
+| PCSX2 | `pcsx2` |
 
-Sudah dicoba dan berhasil pada perangkat pribadi dengan **macOS 26 Tahoe**. Hasil pada versi macOS atau browser lain bisa berbeda karena preferensi ini bukan API publik yang dijamin Apple.
+Untuk browser, sudah dicoba dan berhasil pada perangkat pribadi dengan **macOS 26 Tahoe**. Hasil pada versi macOS atau browser lain bisa berbeda karena preferensi ini bukan API publik yang dijamin Apple.
 
 ## Cara menggunakan
 
@@ -44,24 +45,24 @@ Di halaman GitHub repositori ini, pilih **Code → Download ZIP**, lalu ekstrak 
 
 Buka aplikasi **Terminal** melalui Spotlight (**Command + Space**, lalu ketik `Terminal`).
 
-Ketik `cd` diikuti spasi, seret folder proyek dari Finder ke jendela Terminal, lalu tekan **Enter**. Terminal sekarang berada di folder yang berisi `chrome-menubar.sh`.
+Ketik `cd` diikuti spasi, seret folder proyek dari Finder ke jendela Terminal, lalu tekan **Enter**. Terminal sekarang berada di folder yang berisi `menubar.sh`.
 
 > Semua perintah di bawah dijalankan di Terminal, bukan di kolom alamat browser.
 
-### 3. Aktifkan untuk browser pilihan
+### 3. Aktifkan untuk aplikasi pilihan
 
-Jalankan salah satu perintah berikut, sesuai browser yang Anda gunakan. Jika ingin mengaktifkan beberapa browser, jalankan perintahnya satu per satu.
+Jalankan salah satu perintah berikut, sesuai aplikasi yang Anda gunakan. Jika ingin mengaktifkan beberapa aplikasi, jalankan perintahnya satu per satu.
 
 **Google Chrome:**
 
 ```sh
-zsh chrome-menubar.sh enable chrome
+zsh menubar.sh enable chrome
 ```
 
 **Brave:**
 
 ```sh
-zsh chrome-menubar.sh enable brave
+zsh menubar.sh enable brave
 ```
 
 **Safari:**
@@ -69,8 +70,24 @@ zsh chrome-menubar.sh enable brave
 Safari membutuhkan langkah izin tambahan. Ikuti bagian **Pengaturan khusus Safari** di bawah sebelum menjalankan:
 
 ```sh
-zsh chrome-menubar.sh enable safari
+zsh menubar.sh enable safari
 ```
+
+**PCSX2:**
+
+```sh
+zsh menubar.sh enable pcsx2
+```
+
+Simpan progres permainan, lalu keluar dari PCSX2 dengan **Command + Q** dan buka kembali.
+Jalankan permainan, masuk ke mode fullscreen, lalu jauhkan pointer dari tepi atas.
+Pengaturan global **Never** tidak perlu diubah.
+
+Dukungan PCSX2 menggunakan preferensi per aplikasi yang sama seperti browser,
+dengan domain `net.pcsx2.pcsx2`. Efek fullscreen PCSX2 masih perlu diuji langsung
+pada perangkat Anda; belum dikonfirmasi berhasil seperti browser. Jika belum
+berpengaruh setelah membuka ulang PCSX2, laporkan versi PCSX2 dan mode fullscreen
+yang digunakan.
 
 ### 4. Tutup dan buka kembali browser
 
@@ -93,7 +110,7 @@ macOS melindungi folder preferensi Safari. Jika muncul pesan `Could not write do
 5. Masuk kembali ke folder proyek, kemudian jalankan:
 
    ```sh
-   zsh chrome-menubar.sh enable safari
+   zsh menubar.sh enable safari
    ```
 
 6. Jika berhasil, buka Safari dan uji fullscreen YouTube.
@@ -105,12 +122,13 @@ Full Disk Access memberi akses luas ke data yang dilindungi. Izin ini hanya dipe
 
 ## Memeriksa pengaturan
 
-Jalankan perintah sesuai browser:
+Jalankan perintah sesuai aplikasi:
 
 ```sh
-zsh chrome-menubar.sh status chrome
-zsh chrome-menubar.sh status safari
-zsh chrome-menubar.sh status brave
+zsh menubar.sh status chrome
+zsh menubar.sh status safari
+zsh menubar.sh status brave
+zsh menubar.sh status pcsx2
 ```
 
 Arti hasilnya:
@@ -123,17 +141,18 @@ Arti hasilnya:
 
 ## Mengembalikan ke pengaturan macOS
 
-Jalankan perintah sesuai browser yang ingin dikembalikan:
+Jalankan perintah sesuai aplikasi yang ingin dikembalikan:
 
 ```sh
-zsh chrome-menubar.sh restore chrome
-zsh chrome-menubar.sh restore safari
-zsh chrome-menubar.sh restore brave
+zsh menubar.sh restore chrome
+zsh menubar.sh restore safari
+zsh menubar.sh restore brave
+zsh menubar.sh restore pcsx2
 ```
 
-Kemudian tutup browser dengan **Command + Q** dan buka kembali.
+Kemudian tutup aplikasi dengan **Command + Q** dan buka kembali.
 
-Perintah `restore` menghapus pengaturan khusus menu bar untuk browser tersebut sehingga kembali mengikuti pengaturan macOS. Perintah ini tidak memulihkan nilai khusus yang mungkin sudah Anda pasang sebelum menggunakan skrip; skrip tidak membuat cadangan nilai sebelumnya.
+Perintah `restore` menghapus pengaturan khusus menu bar untuk aplikasi tersebut sehingga kembali mengikuti pengaturan macOS. Perintah ini tidak memulihkan nilai khusus yang mungkin sudah Anda pasang sebelum menggunakan skrip; skrip tidak membuat cadangan nilai sebelumnya.
 
 ## Pertanyaan umum
 
